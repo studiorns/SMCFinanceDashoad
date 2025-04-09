@@ -3,8 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SM&C Finance Dashboard for Department of Culture and Tourism - Abu Dhabi">
+    <meta name="theme-color" content="#121212">
     <title>SM&C Finance Dashboard</title>
+    <!-- Preconnect to external domains for performance -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="styles.css">
+    <!-- Finance Operations CSS -->
+    <link rel="stylesheet" href="css/finance-operations.css">
     <!-- Bootstrap CSS (optional) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Chart.js for visualizations -->
@@ -21,7 +28,15 @@
             --card-bg-color: #1e1e1e;
             --positive-color: #27ae60;
             --negative-color: #e74c3c;
+            --text-primary: rgba(255, 255, 255, 0.95);
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-tertiary: rgba(255, 255, 255, 0.6);
             --border-radius: 8px;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
             --transition-speed: 0.3s;
             --transition-function: cubic-bezier(0.4, 0, 0.2, 1);
             --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
@@ -53,16 +68,13 @@
         /* Tab Navigation Styles */
         .tab-navigation {
             display: flex;
-            border-bottom: 1px solid #333;
+            justify-content: center;
             margin-bottom: 20px;
             background-color: rgba(18, 18, 18, 0.8);
             backdrop-filter: blur(10px);
             border-radius: var(--border-radius);
             padding: 12px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 10px;
-            z-index: 100;
             transition: all var(--transition-speed) var(--transition-function);
         }
         
@@ -75,10 +87,14 @@
             font-weight: bold;
             transition: all var(--transition-speed) var(--transition-function);
             color: white;
-            margin-right: 8px;
+            margin: 0 8px;
             position: relative;
             overflow: hidden;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tab-button i {
+            margin-right: 8px;
         }
         
         .tab-button:focus {
@@ -123,6 +139,34 @@
             display: block;
         }
         
+        /* Accessibility - Focus styles */
+        *:focus {
+            outline: none;
+        }
+
+        *:focus-visible {
+            outline: none;
+            box-shadow: var(--focus-ring);
+            border-radius: 2px;
+        }
+
+        /* Skip to content link for keyboard users */
+        .skip-to-content {
+            position: absolute;
+            top: -40px;
+            left: 0;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px 16px;
+            z-index: 1000;
+            transition: top 0.3s;
+            border-radius: 0 0 var(--border-radius) 0;
+        }
+
+        .skip-to-content:focus {
+            top: 0;
+        }
+        
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             margin: 0;
@@ -131,7 +175,7 @@
             background-image: 
                 radial-gradient(circle at 25% 25%, rgba(37, 99, 235, 0.05) 0%, transparent 50%),
                 radial-gradient(circle at 75% 75%, rgba(231, 76, 60, 0.05) 0%, transparent 50%);
-            color: white;
+            color: var(--text-primary);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
@@ -203,6 +247,21 @@
             gap: 10px;
             margin-top: 15px;
             position: relative;
+        }
+        
+        /* Date display styling */
+        .date-display {
+            text-align: right;
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            background-color: rgba(0,0,0,0.3);
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin: -20px 30px 20px auto;
+            width: fit-content;
+            z-index: 5;
+            transition: all var(--transition-speed) var(--transition-function);
         }
         
         .card {
@@ -424,9 +483,201 @@
             background-clip: text;
         }
         
+        /* Responsive Media Queries */
         @media (max-width: 1200px) {
             .metrics-container {
                 grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .dashboard-container {
+                padding: 15px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .metrics-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-title h1 {
+                font-size: 2rem;
+            }
+            
+            .dashboard-title h2 {
+                font-size: 1.1rem;
+            }
+            
+            .card-body {
+                padding: 15px;
+                min-height: 250px;
+            }
+            
+            .tab-navigation {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .tab-button {
+                margin-bottom: 8px;
+            }
+            
+            header {
+                padding: 20px 0;
+            }
+            
+            .row {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .col-md-6 {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            .dashboard-title h1 {
+                font-size: 1.8rem;
+            }
+            
+            .dashboard-title h2 {
+                font-size: 1rem;
+            }
+            
+            .metric-value {
+                font-size: 1.8rem;
+            }
+            
+            .card-header {
+                padding: 12px 15px;
+            }
+            
+            .card-header h2 {
+                font-size: 1rem;
+            }
+            
+            .card-body {
+                padding: 12px;
+                min-height: 200px;
+            }
+            
+            .chart-container {
+                height: 250px;
+            }
+            
+            .tab-button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .soner-logo {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .dashboard-container {
+                padding: 10px;
+            }
+            
+            .dashboard-title h1 {
+                font-size: 1.5rem;
+            }
+            
+            .dashboard-title h2 {
+                font-size: 0.9rem;
+            }
+            
+            .metric-value {
+                font-size: 1.5rem;
+            }
+            
+            .metric-title {
+                font-size: 0.75rem;
+            }
+            
+            .card {
+                margin-bottom: 20px;
+            }
+            
+            .card-header h2 i {
+                margin-right: 5px;
+            }
+            
+            .chart-container {
+                height: 200px;
+            }
+            
+            .tab-navigation {
+                padding: 8px;
+                margin-bottom: 15px;
+            }
+            
+            .tab-button {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+                margin-right: 5px;
+            }
+            
+            .soner-logo {
+                font-size: 20px;
+            }
+            
+            .soner-radar {
+                width: 20px;
+                height: 20px;
+            }
+            
+            .soner-tagline {
+                font-size: 6px;
+            }
+            
+            header {
+                margin-bottom: 20px;
+            }
+            
+            footer p {
+                font-size: 0.8rem;
+            }
+            
+            /* Date display styling for mobile */
+            .date-display {
+                text-align: center;
+                margin: 0 auto 15px auto;
+                font-size: 0.9rem;
+                padding: 5px 10px;
+                width: auto;
+                display: block;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 320px) {
+            .dashboard-title h1 {
+                font-size: 1.3rem;
+            }
+            
+            .dashboard-title h2 {
+                font-size: 0.8rem;
+            }
+            
+            .tab-button {
+                padding: 5px 10px;
+                font-size: 0.75rem;
+                margin-right: 3px;
+                margin-bottom: 5px;
+            }
+            
+            .tab-navigation {
+                padding: 5px;
+            }
+            
+            .metric-value {
+                font-size: 1.3rem;
+            }
+            
+            .card-header h2 {
+                font-size: 0.9rem;
             }
         }
         
@@ -560,16 +811,63 @@
             border-color: rgba(37, 99, 235, 0.2);
         }
         
+        /* Row and Column Layout */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .col-md-6 {
+            flex: 0 0 50%;
+            max-width: 50%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+        
         @media (max-width: 768px) {
-            .metrics-container {
-                grid-template-columns: 1fr;
+            .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+        
+        /* Touch-friendly improvements */
+        @media (hover: none) {
+            .tab-button {
+                padding: 12px 20px; /* Larger touch targets */
+            }
+            
+            .tab-button:active {
+                background-color: var(--primary-color);
+                color: white;
+            }
+            
+            .card-header h2 {
+                padding: 5px 0;
+            }
+            
+            /* Reduce hover effects that don't work well on touch */
+            .card:hover {
+                transform: none;
+                box-shadow: var(--card-shadow);
+            }
+            
+            .metric-card:hover {
+                transform: none;
+            }
+            
+            /* Simplify animations for better performance */
+            .card, .metric-card {
+                transition: opacity 0.3s ease;
             }
         }
     </style>
 </head>
 <body>
+    <a href="#main-content" class="skip-to-content">Skip to content</a>
     <div class="dashboard-container">
-        <header>
+        <header role="banner">
             <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 15px;">
                 <div class="soner-logo">
                     S<div class="soner-radar">
@@ -584,48 +882,58 @@
                 <h1>SM&C Finance Dashboard</h1>
                 <h2>Department of Culture and Tourism - Abu Dhabi</h2>
             </div>
-            <div style="position: absolute; top: 20px; right: 30px; color: white; font-size: 1.1rem; font-weight: bold; background-color: rgba(0,0,0,0.3); padding: 8px 15px; border-radius: 5px;">
-                As of April 9, 2025
-            </div>
         </header>
         
-        <!-- Tab Navigation -->
-        <div class="tab-navigation">
-            <button class="tab-button active" data-tab="procurement">Procurement View</button>
-            <button class="tab-button" data-tab="finance">Finance View</button>
-            <button class="tab-button" data-tab="strategy">Strategy View</button>
+        <!-- Date display moved outside header -->
+        <div class="date-display" aria-label="Current data as of date">
+            As of April 9, 2025
         </div>
         
+        <main>
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation" role="tablist" aria-label="Dashboard Views">
+            <button class="tab-button active" id="procurement-tab" data-tab="procurement" role="tab" aria-selected="true" aria-controls="procurement">
+                <i class="fas fa-shopping-cart"></i> Procurement View
+            </button>
+            <button class="tab-button" id="finance-tab" data-tab="finance" role="tab" aria-selected="false" aria-controls="finance">
+                <i class="fas fa-money-bill-wave"></i> Finance View
+            </button>
+            <button class="tab-button" id="strategy-tab" data-tab="strategy" role="tab" aria-selected="false" aria-controls="strategy">
+                <i class="fas fa-chart-line"></i> Strategy View
+            </button>
+        </nav>
+        
         <!-- Procurement View Tab -->
-        <div id="procurement" class="tab-content">
+        <div id="procurement" class="tab-content" role="tabpanel" aria-labelledby="procurement-tab">
+            <div id="main-content" tabindex="-1"></div>
             <!-- Procurement Metrics -->
             <section class="metrics-container">
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-money-bill-wave"></i> Total Budget 2025</div>
+                <div class="metric-card" role="region" aria-label="Total Budget metric">
+                    <div class="metric-title"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Total Budget 2025</div>
                     <div class="metric-value">1.10B AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-file-contract"></i> Committed YTD</div>
+                <div class="metric-card" role="region" aria-label="Committed YTD metric">
+                    <div class="metric-title"><i class="fas fa-file-contract" aria-hidden="true"></i> Committed YTD</div>
                     <div class="metric-value">3.13M AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-calendar-alt"></i> Planned</div>
+                <div class="metric-card" role="region" aria-label="Planned metric">
+                    <div class="metric-title"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Planned</div>
                     <div class="metric-value">4.88M AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-chart-line"></i> vs Planned</div>
+                <div class="metric-card" role="region" aria-label="vs Planned percentage metric">
+                    <div class="metric-title"><i class="fas fa-chart-line" aria-hidden="true"></i> vs Planned</div>
                     <div class="metric-value">64.1%</div>
                 </div>
             </section>
             
             <!-- Budget vs Committed -->
             <section class="card">
-                <div class="card-header">
-                    <h2><i class="fas fa-chart-bar"></i> Budget vs Actual by Month</h2>
+                <div class="card-header" role="heading" aria-level="2">
+                    <h2><i class="fas fa-chart-bar" aria-hidden="true"></i> Budget vs Actual by Month</h2>
                 </div>
                 <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="budgetCommittedChart"></canvas>
+                    <div class="chart-container" aria-label="Budget vs Actual by Month chart">
+                        <canvas id="budgetCommittedChart" aria-label="Bar chart showing budget vs actual spending by month"></canvas>
                     </div>
                 </div>
             </section>
@@ -634,24 +942,24 @@
             <div class="row">
                 <div class="col-md-6">
                     <section class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-shopping-cart"></i> Breakdown by Department</h2>
+                        <div class="card-header" role="heading" aria-level="2">
+                            <h2><i class="fas fa-shopping-cart" aria-hidden="true"></i> Breakdown by Department</h2>
                         </div>
                         <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="poStatusChart"></canvas>
+                            <div class="chart-container" aria-label="Breakdown by Department chart">
+                                <canvas id="poStatusChart" aria-label="Doughnut chart showing breakdown by department"></canvas>
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="col-md-6">
                     <section class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-file-invoice"></i> Breakdown by Expenditure Type</h2>
+                        <div class="card-header" role="heading" aria-level="2">
+                            <h2><i class="fas fa-file-invoice" aria-hidden="true"></i> Breakdown by Expenditure Type</h2>
                         </div>
                         <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="prStatusChart"></canvas>
+                            <div class="chart-container" aria-label="Breakdown by Expenditure Type chart">
+                                <canvas id="prStatusChart" aria-label="Doughnut chart showing breakdown by expenditure type"></canvas>
                             </div>
                         </div>
                     </section>
@@ -660,35 +968,35 @@
         </div>
         
         <!-- Finance View Tab -->
-        <div id="finance" class="tab-content">
+        <div id="finance" class="tab-content" role="tabpanel" aria-labelledby="finance-tab">
             <!-- Finance Metrics -->
             <section class="metrics-container">
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-money-bill-wave"></i> Total Budget 2025</div>
+                <div class="metric-card" role="region" aria-label="Total Budget metric">
+                    <div class="metric-title"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Total Budget 2025</div>
                     <div class="metric-value">950M AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-cash-register"></i> Cash Out</div>
+                <div class="metric-card" role="region" aria-label="Cash Out metric">
+                    <div class="metric-title"><i class="fas fa-cash-register" aria-hidden="true"></i> Cash Out</div>
                     <div class="metric-value">85M AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-calendar-alt"></i> Planned</div>
+                <div class="metric-card" role="region" aria-label="Planned metric">
+                    <div class="metric-title"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Planned</div>
                     <div class="metric-value">120M AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-percentage"></i> vs Planned %</div>
+                <div class="metric-card" role="region" aria-label="vs Planned percentage metric">
+                    <div class="metric-title"><i class="fas fa-percentage" aria-hidden="true"></i> vs Planned %</div>
                     <div class="metric-value">70.8%</div>
                 </div>
             </section>
             
             <!-- Cash Flow Projection -->
             <section class="card">
-                <div class="card-header">
-                    <h2><i class="fas fa-chart-line"></i> Cash Flow by Month</h2>
+                <div class="card-header" role="heading" aria-level="2">
+                    <h2><i class="fas fa-chart-line" aria-hidden="true"></i> Cash Flow by Month</h2>
                 </div>
                 <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="cashFlowChart"></canvas>
+                    <div class="chart-container" aria-label="Cash Flow by Month chart">
+                        <canvas id="cashFlowChart" aria-label="Bar chart showing cash flow by month"></canvas>
                     </div>
                 </div>
             </section>
@@ -697,24 +1005,24 @@
             <div class="row">
                 <div class="col-md-6">
                     <section class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-chart-pie"></i> Breakdown by Department</h2>
+                        <div class="card-header" role="heading" aria-level="2">
+                            <h2><i class="fas fa-chart-pie" aria-hidden="true"></i> Breakdown by Department</h2>
                         </div>
                         <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="expenseBreakdownChart"></canvas>
+                            <div class="chart-container" aria-label="Breakdown by Department chart">
+                                <canvas id="expenseBreakdownChart" aria-label="Doughnut chart showing expense breakdown by department"></canvas>
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="col-md-6">
                     <section class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-chart-pie"></i> Breakdown by Expenditure Type</h2>
+                        <div class="card-header" role="heading" aria-level="2">
+                            <h2><i class="fas fa-chart-pie" aria-hidden="true"></i> Breakdown by Expenditure Type</h2>
                         </div>
                         <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="budgetUtilizationChart"></canvas>
+                            <div class="chart-container" aria-label="Breakdown by Expenditure Type chart">
+                                <canvas id="budgetUtilizationChart" aria-label="Doughnut chart showing budget utilization by expenditure type"></canvas>
                             </div>
                         </div>
                     </section>
@@ -723,35 +1031,35 @@
         </div>
         
         <!-- Strategy View Tab -->
-        <div id="strategy" class="tab-content">
+        <div id="strategy" class="tab-content" role="tabpanel" aria-labelledby="strategy-tab">
             <!-- Strategy Metrics -->
             <section class="metrics-container">
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-money-bill-wave"></i> Total Budget 2025</div>
+                <div class="metric-card" role="region" aria-label="Total Budget metric">
+                    <div class="metric-title"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Total Budget 2025</div>
                     <div class="metric-value">1.10B AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-wallet"></i> Actual Spend</div>
+                <div class="metric-card" role="region" aria-label="Actual Spend metric">
+                    <div class="metric-title"><i class="fas fa-wallet" aria-hidden="true"></i> Actual Spend</div>
                     <div class="metric-value">110M AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-calendar-alt"></i> Planned</div>
+                <div class="metric-card" role="region" aria-label="Planned metric">
+                    <div class="metric-title"><i class="fas fa-calendar-alt" aria-hidden="true"></i> Planned</div>
                     <div class="metric-value">700M AED</div>
                 </div>
-                <div class="metric-card">
-                    <div class="metric-title"><i class="fas fa-percentage"></i> vs Planned %</div>
+                <div class="metric-card" role="region" aria-label="vs Planned percentage metric">
+                    <div class="metric-title"><i class="fas fa-percentage" aria-hidden="true"></i> vs Planned %</div>
                     <div class="metric-value">15.7%</div>
                 </div>
             </section>
             
             <!-- Budget Allocation by Department -->
             <section class="card">
-                <div class="card-header">
-                    <h2><i class="fas fa-sitemap"></i> Budget Allocation by Month</h2>
+                <div class="card-header" role="heading" aria-level="2">
+                    <h2><i class="fas fa-sitemap" aria-hidden="true"></i> Budget Allocation by Month</h2>
                 </div>
                 <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="budgetAllocationChart"></canvas>
+                    <div class="chart-container" aria-label="Budget Allocation by Month chart">
+                        <canvas id="budgetAllocationChart" aria-label="Bar chart showing budget allocation by month"></canvas>
                     </div>
                 </div>
             </section>
@@ -760,24 +1068,24 @@
             <div class="row">
                 <div class="col-md-6">
                     <section class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-chart-pie"></i> Breakdown by Department</h2>
+                        <div class="card-header" role="heading" aria-level="2">
+                            <h2><i class="fas fa-chart-pie" aria-hidden="true"></i> Breakdown by Department</h2>
                         </div>
                         <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="strategicInitiativesChart"></canvas>
+                            <div class="chart-container" aria-label="Breakdown by Department chart">
+                                <canvas id="strategicInitiativesChart" aria-label="Doughnut chart showing strategic initiatives by department"></canvas>
                             </div>
                         </div>
                     </section>
                 </div>
                 <div class="col-md-6">
                     <section class="card">
-                        <div class="card-header">
-                            <h2><i class="fas fa-chart-pie"></i> Breakdown by Expenditure Type</h2>
+                        <div class="card-header" role="heading" aria-level="2">
+                            <h2><i class="fas fa-chart-pie" aria-hidden="true"></i> Breakdown by Expenditure Type</h2>
                         </div>
                         <div class="card-body">
-                            <div class="chart-container">
-                                <canvas id="roiChart"></canvas>
+                            <div class="chart-container" aria-label="Breakdown by Expenditure Type chart">
+                                <canvas id="roiChart" aria-label="Doughnut chart showing breakdown by expenditure type"></canvas>
                             </div>
                         </div>
                     </section>
@@ -786,15 +1094,216 @@
             
         </div>
         
-        <footer style="background-color: var(--card-bg-color); padding: 20px 0; text-align: center; margin-top: 40px; border-top: 1px solid #333;">
+        <!-- Finance Operations Section (Always visible regardless of main tab) -->
+        <section class="finance-operations-section" id="finance-operations" aria-label="Finance Operations">
+            <h2 class="fo-section-title">Finance Operations</h2>
+            
+            <!-- Toggle Navigation -->
+            <div class="fo-toggle-navigation" role="tablist" aria-label="Finance Operations Views">
+                <button class="fo-toggle-button active" id="pr-tab" data-content="pr-content" role="tab" aria-selected="true">
+                    <i class="fas fa-file-invoice"></i> Purchase Requisitions
+                </button>
+                <button class="fo-toggle-button" id="po-tab" data-content="po-content" role="tab" aria-selected="false">
+                    <i class="fas fa-shopping-cart"></i> Purchase Orders
+                </button>
+                <button class="fo-toggle-button" id="grn-tab" data-content="grn-content" role="tab" aria-selected="false">
+                    <i class="fas fa-truck-loading"></i> Goods Receipt Notes
+                </button>
+            </div>
+            
+            <!-- Content Container -->
+            <div class="fo-toggle-content-container">
+                <!-- PR Content (Initially Visible) -->
+                <div id="pr-content" class="fo-toggle-content active" role="tabpanel" aria-labelledby="pr-tab">
+                    <!-- PR Metric Cards -->
+                    <div class="fo-metrics-container pr-metrics">
+                        <div class="fo-metric-card" role="region" aria-label="Total PRs metric">
+                            <div class="fo-metric-title"><i class="fas fa-file-invoice" aria-hidden="true"></i> PRs</div>
+                            <div class="fo-metric-value" id="pr-total-count">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="Approved PRs metric">
+                            <div class="fo-metric-title"><i class="fas fa-check-circle" aria-hidden="true"></i> Approved</div>
+                            <div class="fo-metric-value" id="pr-approved-count">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="In Process PRs metric">
+                            <div class="fo-metric-title"><i class="fas fa-spinner" aria-hidden="true"></i> In Process</div>
+                            <div class="fo-metric-value" id="pr-in-process-count">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="Average Aging Days metric">
+                            <div class="fo-metric-title"><i class="fas fa-calendar-day" aria-hidden="true"></i> Avg. Aging Days</div>
+                            <div class="fo-metric-value" id="pr-avg-aging">0</div>
+                        </div>
+                    </div>
+                    
+                    <!-- PR Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-table"></i> Purchase Requisitions</h2>
+                        </div>
+                        <div class="card-body">
+                            <table class="data-table" id="pr-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Value</th>
+                                        <th>Aging</th>
+                                        <th>Raised by</th>
+                                        <th>Pending with</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table content will be populated by purchase-requisitions.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PO Content (Initially Hidden) -->
+                <div id="po-content" class="fo-toggle-content" role="tabpanel" aria-labelledby="po-tab">
+                    <!-- PO Metric Cards -->
+                    <div class="fo-metrics-container">
+                        <div class="fo-metric-card" role="region" aria-label="Total POs metric">
+                            <div class="fo-metric-title"><i class="fas fa-shopping-cart" aria-hidden="true"></i> POs</div>
+                            <div class="fo-metric-value" id="po-total-count">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="Approved POs metric">
+                            <div class="fo-metric-title"><i class="fas fa-check-circle" aria-hidden="true"></i> Approved</div>
+                            <div class="fo-metric-value" id="po-approved-count">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="In Process POs metric">
+                            <div class="fo-metric-title"><i class="fas fa-spinner" aria-hidden="true"></i> In Process</div>
+                            <div class="fo-metric-value" id="po-in-process-count">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="Partially Received POs metric">
+                            <div class="fo-metric-title"><i class="fas fa-dolly" aria-hidden="true"></i> Partially Received</div>
+                            <div class="fo-metric-value" id="po-partially-received">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="Average Aging Days metric">
+                            <div class="fo-metric-title"><i class="fas fa-calendar-day" aria-hidden="true"></i> Avg. Aging Days</div>
+                            <div class="fo-metric-value" id="po-avg-aging">0</div>
+                        </div>
+                    </div>
+                    
+                    <!-- PO Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-table"></i> Purchase Orders</h2>
+                        </div>
+                        <div class="card-body">
+                            <table class="data-table" id="po-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Value</th>
+                                        <th>Aging</th>
+                                        <th>Raised by</th>
+                                        <th>Pending with</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table content will be populated by purchase_orders.js -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- GRN Content (Initially Hidden) -->
+                <div id="grn-content" class="fo-toggle-content" role="tabpanel" aria-labelledby="grn-tab">
+                    <!-- GRN Metric Cards -->
+                    <div class="fo-metrics-container">
+                        <div class="fo-metric-card" role="region" aria-label="Total GRNs metric">
+                            <div class="fo-metric-title"><i class="fas fa-truck-loading" aria-hidden="true"></i> GRNs</div>
+                            <div class="fo-metric-value" id="grn-total-count">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="Total Value metric">
+                            <div class="fo-metric-title"><i class="fas fa-money-bill-wave" aria-hidden="true"></i> Value (AED)</div>
+                            <div class="fo-metric-value" id="grn-total-value">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="In Process GRNs metric">
+                            <div class="fo-metric-title"><i class="fas fa-spinner" aria-hidden="true"></i> In Process</div>
+                            <div class="fo-metric-value" id="grn-in-process-count">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="Partially Received GRNs metric">
+                            <div class="fo-metric-title"><i class="fas fa-dolly" aria-hidden="true"></i> Partially Received</div>
+                            <div class="fo-metric-value" id="grn-partially-received">0</div>
+                        </div>
+                        <div class="fo-metric-card" role="region" aria-label="Fully Received GRNs metric">
+                            <div class="fo-metric-title"><i class="fas fa-check-double" aria-hidden="true"></i> Fully Received</div>
+                            <div class="fo-metric-value" id="grn-fully-received">0</div>
+                        </div>
+                    </div>
+                    
+                    <!-- GRN Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2><i class="fas fa-table"></i> Goods Receipt Notes</h2>
+                        </div>
+                        <div class="card-body">
+                            <table class="data-table" id="grn-table">
+                                <thead>
+                                    <tr>
+                                        <th>Title</th>
+                                        <th>Value</th>
+                                        <th>Aging</th>
+                                        <th>Raised by</th>
+                                        <th>Pending with</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Table content will be populated by JavaScript -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        </main>
+        
+        <footer style="background-color: var(--card-bg-color); padding: 20px 10px; text-align: center; margin-top: 40px; border-top: 1px solid #333;" role="contentinfo">
             <div class="container">
-                <p style="margin: 0; color: #7f8c8d; font-size: 0.9rem;">© 2025 Research & Insights Unit | Strategic Marketing & Communications | Department of Culture and Tourism – Abu Dhabi</p>
+                <p style="margin: 0; color: #7f8c8d; font-size: 0.9rem; line-height: 1.5;">© 2025 Research & Insights Unit<br class="mobile-break"> Strategic Marketing & Communications<br class="mobile-break"> Department of Culture and Tourism – Abu Dhabi</p>
             </div>
         </footer>
+        
+        <style>
+            /* Hide line breaks on larger screens */
+            @media (min-width: 481px) {
+                .mobile-break {
+                    display: none;
+                }
+            }
+        </style>
     </div>
     
     <!-- JavaScript for charts and interactivity -->
     <script>
+        // Mobile optimizations
+        function setViewportHeight() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        // Set on initial load and resize
+        window.addEventListener('resize', setViewportHeight);
+        window.addEventListener('orientationchange', setViewportHeight);
+        setViewportHeight();
+        
+        // Detect touch devices
+        function isTouchDevice() {
+            return (('ontouchstart' in window) ||
+                   (navigator.maxTouchPoints > 0) ||
+                   (navigator.msMaxTouchPoints > 0));
+        }
+        
+        // Add touch class to body if it's a touch device
+        if (isTouchDevice()) {
+            document.body.classList.add('touch-device');
+        }
+        
         // Tab Navigation
         document.addEventListener('DOMContentLoaded', function() {
             // Add animation delay to cards based on their position
@@ -807,11 +1316,15 @@
                 card.style.setProperty('--metric-index', index);
             });
             
-            // Tab switching with smooth transitions
+            // Tab switching with smooth transitions - optimized for mobile and accessibility
             document.querySelectorAll('.tab-button').forEach(button => {
+                // Click event handler
                 button.addEventListener('click', () => {
-                    // Remove active class from all buttons
-                    document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                    // Remove active class from all buttons and update ARIA attributes
+                    document.querySelectorAll('.tab-button').forEach(btn => {
+                        btn.classList.remove('active');
+                        btn.setAttribute('aria-selected', 'false');
+                    });
                     
                     // Hide all tabs with fade out effect
                     document.querySelectorAll('.tab-content').forEach(tab => {
@@ -821,21 +1334,32 @@
                         }, 300);
                     });
                     
-                    // Add active class to clicked button
+                    // Add active class to clicked button and update ARIA attributes
                     button.classList.add('active');
+                    button.setAttribute('aria-selected', 'true');
                     
                     // Show corresponding tab with fade in effect after a short delay
                     setTimeout(() => {
                         const targetTab = document.getElementById(button.dataset.tab);
                         targetTab.style.display = 'block';
                         
-                        // Reset animation delays for cards in the new tab
+                        // Determine if we're on mobile
+                        const isMobile = window.innerWidth <= 768;
+                        
+                        // Reset animation delays for cards in the new tab - reduce animations on mobile
                         targetTab.querySelectorAll('.card').forEach((card, index) => {
                             card.style.setProperty('--card-index', index);
                             card.style.animation = 'none';
                             card.offsetHeight; // Trigger reflow
-                            card.style.animation = 'slideUp 0.5s ease forwards';
-                            card.style.animationDelay = `${index * 0.1}s`;
+                            
+                            if (isMobile) {
+                                // Simpler animations for mobile
+                                card.style.animation = 'fadeIn 0.3s ease forwards';
+                                card.style.animationDelay = `${index * 0.05}s`;
+                            } else {
+                                card.style.animation = 'slideUp 0.5s ease forwards';
+                                card.style.animationDelay = `${index * 0.1}s`;
+                            }
                         });
                         
                         // Reset animation delays for metric cards in the new tab
@@ -843,19 +1367,58 @@
                             card.style.setProperty('--metric-index', index);
                             card.style.animation = 'none';
                             card.offsetHeight; // Trigger reflow
-                            card.style.animation = 'slideUp 0.5s ease forwards';
-                            card.style.animationDelay = `${index * 0.1 + 0.3}s`;
+                            
+                            if (isMobile) {
+                                // Simpler animations for mobile
+                                card.style.animation = 'fadeIn 0.3s ease forwards';
+                                card.style.animationDelay = `${index * 0.05 + 0.1}s`;
+                            } else {
+                                card.style.animation = 'slideUp 0.5s ease forwards';
+                                card.style.animationDelay = `${index * 0.1 + 0.3}s`;
+                            }
                         });
                         
                         // Fade in the tab
                         setTimeout(() => {
                             targetTab.style.opacity = '1';
                         }, 50);
+                        
+                        // Scroll to top on tab change for mobile
+                        if (isMobile) {
+                            window.scrollTo({top: 0, behavior: 'smooth'});
+                        }
                     }, 300);
+                });
+                
+                // Keyboard navigation for tabs
+                button.addEventListener('keydown', (e) => {
+                    const tabButtons = Array.from(document.querySelectorAll('.tab-button'));
+                    const currentIndex = tabButtons.indexOf(button);
+                    
+                    // Handle arrow keys for tab navigation
+                    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                        e.preventDefault();
+                        const nextIndex = (currentIndex + 1) % tabButtons.length;
+                        tabButtons[nextIndex].focus();
+                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                        e.preventDefault();
+                        const prevIndex = (currentIndex - 1 + tabButtons.length) % tabButtons.length;
+                        tabButtons[prevIndex].focus();
+                    } else if (e.key === 'Home') {
+                        e.preventDefault();
+                        tabButtons[0].focus();
+                    } else if (e.key === 'End') {
+                        e.preventDefault();
+                        tabButtons[tabButtons.length - 1].focus();
+                    } else if (e.key === 'Enter' || e.key === ' ') {
+                        // Activate tab on Enter or Space key press
+                        e.preventDefault();
+                        button.click();
+                    }
                 });
             });
             
-            // Enhanced chart initialization with animations
+            // Enhanced chart initialization with animations - mobile optimized
             function initializeChart(elementId, chartConfig) {
                 const element = document.getElementById(elementId);
                 if (!element) return null;
@@ -870,25 +1433,40 @@
                 // Add default animation options if not provided
                 if (!chartConfig.options) chartConfig.options = {};
                 
-                // Enhance animation options
+                // Check if we're on mobile
+                const isMobile = window.innerWidth <= 768;
+                
+                // Enhance animation options - simplified for mobile
                 const enhancedOptions = {
                     ...chartConfig.options,
                     animation: {
-                        duration: 800,
+                        duration: isMobile ? 400 : 800,
                         easing: 'easeOutCubic'
                     },
                     plugins: {
                         ...chartConfig.options.plugins,
+                        legend: {
+                            ...chartConfig.options.plugins?.legend,
+                            position: isMobile ? 'bottom' : (chartConfig.options.plugins?.legend?.position || 'top'),
+                            labels: {
+                                ...(chartConfig.options.plugins?.legend?.labels || {}),
+                                boxWidth: isMobile ? 10 : 15,
+                                padding: isMobile ? 10 : 20,
+                                font: {
+                                    size: isMobile ? 10 : 13
+                                }
+                            }
+                        },
                         tooltip: {
                             backgroundColor: 'rgba(0, 0, 0, 0.8)',
                             titleFont: {
-                                size: 14,
+                                size: isMobile ? 12 : 14,
                                 weight: 'bold'
                             },
                             bodyFont: {
-                                size: 13
+                                size: isMobile ? 11 : 13
                             },
-                            padding: 12,
+                            padding: isMobile ? 8 : 12,
                             cornerRadius: 6,
                             displayColors: true,
                             borderColor: 'rgba(255, 255, 255, 0.1)',
@@ -898,7 +1476,10 @@
                     interaction: {
                         mode: 'nearest',
                         intersect: false
-                    }
+                    },
+                    // Make sure charts are responsive
+                    responsive: true,
+                    maintainAspectRatio: false
                 };
                 
                 // Create enhanced chart config
@@ -910,11 +1491,43 @@
                 // Remove loading state after a short delay
                 setTimeout(() => {
                     if (container) container.classList.remove('loading');
-                }, 300);
+                }, isMobile ? 200 : 300);
                 
                 // Create and return the chart immediately
                 return new Chart(ctx, enhancedConfig);
             }
+            
+            // Handle window resize and orientation change for charts
+            let charts = [];
+            function handleViewportChange() {
+                // Update chart configurations on major size changes
+                if (charts.length > 0) {
+                    const width = window.innerWidth;
+                    if (
+                        (width <= 768 && lastWidth > 768) || 
+                        (width > 768 && lastWidth <= 768) ||
+                        (width <= 480 && lastWidth > 480) || 
+                        (width > 480 && lastWidth <= 480)
+                    ) {
+                        // Update legend positions for better mobile display
+                        charts.forEach(chart => {
+                            if (chart && chart.options && chart.options.plugins && chart.options.plugins.legend) {
+                                chart.options.plugins.legend.position = width <= 480 ? 'bottom' : (width <= 768 ? 'bottom' : 'right');
+                                chart.update('none'); // Update without animation for better performance
+                            }
+                        });
+                    }
+                    lastWidth = width;
+                }
+            }
+            
+            window.addEventListener('resize', handleViewportChange);
+            window.addEventListener('orientationchange', function() {
+                // Small delay to ensure dimensions are updated after orientation change
+                setTimeout(handleViewportChange, 100);
+            });
+            
+            let lastWidth = window.innerWidth;
             
             // Budget vs Committed Chart (Procurement Tab)
             initializeChart('budgetCommittedChart', {
@@ -1038,15 +1651,16 @@
                     radius: '90%',
                     plugins: {
                         legend: {
-                            position: 'right',
+                            position: window.innerWidth <= 480 ? 'bottom' : 'right',
                             labels: {
                                 color: 'rgba(255, 255, 255, 0.8)',
                                 font: {
-                                    size: 13
+                                    size: window.innerWidth <= 480 ? 10 : 13
                                 },
-                                padding: 20,
+                                padding: window.innerWidth <= 480 ? 10 : 20,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: window.innerWidth <= 480 ? 8 : 15
                             }
                         },
                         tooltip: {
@@ -1093,15 +1707,16 @@
                     radius: '90%',
                     plugins: {
                         legend: {
-                            position: 'right',
+                            position: window.innerWidth <= 480 ? 'bottom' : 'right',
                             labels: {
                                 color: 'rgba(255, 255, 255, 0.8)',
                                 font: {
-                                    size: 13
+                                    size: window.innerWidth <= 480 ? 10 : 13
                                 },
-                                padding: 20,
+                                padding: window.innerWidth <= 480 ? 10 : 20,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: window.innerWidth <= 480 ? 8 : 15
                             }
                         },
                         tooltip: {
@@ -1148,15 +1763,16 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
-                            position: 'right',
+                            position: window.innerWidth <= 480 ? 'bottom' : 'right',
                             labels: {
                                 color: 'rgba(255, 255, 255, 0.8)',
                                 font: {
-                                    size: 13
+                                    size: window.innerWidth <= 480 ? 10 : 13
                                 },
-                                padding: 20,
+                                padding: window.innerWidth <= 480 ? 10 : 20,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: window.innerWidth <= 480 ? 8 : 15
                             }
                         }
                     }
@@ -1196,15 +1812,16 @@
                     radius: '90%',
                     plugins: {
                         legend: {
-                            position: 'right',
+                            position: window.innerWidth <= 480 ? 'bottom' : 'right',
                             labels: {
                                 color: 'rgba(255, 255, 255, 0.8)',
                                 font: {
-                                    size: 13
+                                    size: window.innerWidth <= 480 ? 10 : 13
                                 },
-                                padding: 20,
+                                padding: window.innerWidth <= 480 ? 10 : 20,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: window.innerWidth <= 480 ? 8 : 15
                             }
                         },
                         tooltip: {
@@ -1251,15 +1868,16 @@
                     radius: '90%',
                     plugins: {
                         legend: {
-                            position: 'right',
+                            position: window.innerWidth <= 480 ? 'bottom' : 'right',
                             labels: {
                                 color: 'rgba(255, 255, 255, 0.8)',
                                 font: {
-                                    size: 13
+                                    size: window.innerWidth <= 480 ? 10 : 13
                                 },
-                                padding: 20,
+                                padding: window.innerWidth <= 480 ? 10 : 20,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: window.innerWidth <= 480 ? 8 : 15
                             }
                         },
                         tooltip: {
@@ -1478,15 +2096,16 @@
                     radius: '90%',
                     plugins: {
                         legend: {
-                            position: 'right',
+                            position: window.innerWidth <= 480 ? 'bottom' : 'right',
                             labels: {
                                 color: 'rgba(255, 255, 255, 0.8)',
                                 font: {
-                                    size: 13
+                                    size: window.innerWidth <= 480 ? 10 : 13
                                 },
-                                padding: 20,
+                                padding: window.innerWidth <= 480 ? 10 : 20,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: window.innerWidth <= 480 ? 8 : 15
                             }
                         },
                         tooltip: {
@@ -1533,15 +2152,16 @@
                     radius: '90%',
                     plugins: {
                         legend: {
-                            position: 'right',
+                            position: window.innerWidth <= 480 ? 'bottom' : 'right',
                             labels: {
                                 color: 'rgba(255, 255, 255, 0.8)',
                                 font: {
-                                    size: 13
+                                    size: window.innerWidth <= 480 ? 10 : 13
                                 },
-                                padding: 20,
+                                padding: window.innerWidth <= 480 ? 10 : 20,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                boxWidth: window.innerWidth <= 480 ? 8 : 15
                             }
                         },
                         tooltip: {
@@ -1556,5 +2176,14 @@
             });
         });
     </script>
+    
+    <!-- Finance Operations JavaScript -->
+    <script src="js/finance-operations.js"></script>
+    <!-- Purchase Requisitions JavaScript -->
+    <script src="js/purchase-requisitions.js"></script>
+    <!-- Purchase Orders JavaScript -->
+    <script src="js/purchase_orders.js"></script>
+    <!-- Goods Receipt Notes JavaScript -->
+    <script src="js/gr.js"></script>
 </body>
 </html>
