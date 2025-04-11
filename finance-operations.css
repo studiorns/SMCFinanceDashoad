@@ -198,19 +198,12 @@
     line-height: 1.2;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     transition: all var(--transition-speed) var(--transition-function);
-    background: linear-gradient(90deg, #fff, #ccc);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
     opacity: 0;
     animation: fadeIn 0.5s ease forwards 0.5s;
 }
 
 .fo-metric-card:hover .fo-metric-value {
     transform: scale(1.05);
-    background: linear-gradient(90deg, #fff, #fff);
-    -webkit-background-clip: text;
-    background-clip: text;
 }
 
 /* Responsive styles */
