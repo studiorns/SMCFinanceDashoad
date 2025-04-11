@@ -290,6 +290,52 @@
     }
 }
 
+/* Stacked Layout for Tables on Small Screens */
+@media (max-width: 768px) {
+    .data-table.stacked-layout {
+        display: block;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .data-table.stacked-layout thead {
+        display: none; /* Hide table headers */
+    }
+
+    .data-table.stacked-layout tbody {
+        display: block;
+    }
+
+    .data-table.stacked-layout tr {
+        display: block;
+        margin-bottom: 15px;
+        background: linear-gradient(145deg, #141414, #1a1a1a);
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+        padding: 10px;
+    }
+
+    .data-table.stacked-layout td {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px 15px;
+        text-align: left;
+        border-bottom: none;
+    }
+
+    .data-table.stacked-layout td::before {
+        content: attr(data-label); /* Use the data-label attribute for the heading */
+        font-weight: bold;
+        color: var(--text-secondary);
+        margin-bottom: 5px;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+    }
+}
+
 @media (max-width: 480px) {
     .fo-toggle-navigation {
         padding: 10px;
