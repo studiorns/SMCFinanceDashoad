@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="styles.css">
     <!-- Finance Operations CSS -->
-    <link rel="stylesheet" href="finance-operations.css">
+    <link rel="stylesheet" href="css/finance-operations.css">
     <!-- Bootstrap CSS (optional) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Chart.js for visualizations -->
@@ -494,6 +494,7 @@
                 gap: 10px;
                 padding: 15px;
                 justify-content: space-around;
+                flex-direction: column;
             }
             
             .tab-toggle-button {
@@ -503,6 +504,7 @@
                 flex: 1 1 auto;
                 min-width: 120px;
                 text-align: center;
+                width: 100%;
             }
             
             header {
@@ -516,6 +518,18 @@
             
             .col-md-6 {
                 width: 100%;
+            }
+
+            .metric-card {
+                padding: 16px;
+            }
+
+            .metric-title {
+                font-size: 0.8rem;
+            }
+
+            .metric-value {
+                font-size: 1.8rem;
             }
         }
         
@@ -601,7 +615,7 @@
             
             .tab-toggle-button {
                 padding: 12px 15px;
-                font-size: 0.9rem;
+                font-size: 0.85rem;
                 margin: 0;
                 width: 100%;
                 display: flex;
@@ -638,6 +652,17 @@
                 padding: 5px 10px;
                 width: auto;
                 display: block;
+            }
+
+            .data-table {
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            .data-table th, .data-table td {
+                font-size: 0.8rem;
+                padding: 10px;
             }
         }
         
@@ -1133,8 +1158,8 @@
                             <h2><i class="fas fa-table"></i> Purchase Requisitions</h2>
                         </div>
                         <div class="card-body">
-                            <table class="data-table" id="pr-table">
-                                <thead>
+                            <table class="data-table" id="pr-table" aria-label="Purchase Requisitions Table">
+                                <thead aria-label="Table headers for purchase requisitions">
                                     <tr>
                                         <th>Title</th>
                                         <th>Value</th>
@@ -1144,6 +1169,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center; color: rgba(255, 255, 255, 0.6);">
+                                            No data available
+                                        </td>
+                                    </tr>
                                     <!-- Table content will be populated by purchase-requisitions.js -->
                                 </tbody>
                             </table>
@@ -2170,12 +2200,12 @@
     </script>
     
     <!-- Finance Operations JavaScript -->
-    <script src="finance-operations.js"></script>
+    <script src="js/finance-operations.js"></script>
     <!-- Purchase Requisitions JavaScript -->
-    <script src="purchase-requisitions.js"></script>
+    <script src="js/purchase-requisitions.js"></script>
     <!-- Purchase Orders JavaScript -->
-    <script src="purchase_orders.js"></script>
+    <script src="js/purchase_orders.js"></script>
     <!-- Goods Receipt Notes JavaScript -->
-    <script src="gr.js"></script>
+    <script src="js/gr.js"></script>
 </body>
 </html>

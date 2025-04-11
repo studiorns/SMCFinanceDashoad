@@ -243,6 +243,53 @@
     }
 }
 
+/* Mobile Card View for Tables */
+@media (max-width: 768px) {
+    .data-table.card-view {
+        display: block;
+        border-collapse: separate;
+        border-spacing: 0 10px;
+    }
+    
+    .data-table.card-view thead {
+        display: none; /* Hide the header on mobile */
+    }
+    
+    .data-table.card-view tbody {
+        display: block;
+    }
+    
+    .data-table.card-view tr {
+        display: block;
+        margin-bottom: 15px;
+        background: linear-gradient(145deg, #141414, #1a1a1a);
+        border-radius: var(--border-radius);
+        box-shadow: var(--card-shadow);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        overflow: hidden;
+    }
+    
+    .data-table.card-view td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 15px;
+        text-align: right;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .data-table.card-view td:last-child {
+        border-bottom: none;
+    }
+    
+    .data-table.card-view td::before {
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left;
+        color: var(--text-secondary);
+    }
+}
+
 @media (max-width: 480px) {
     .fo-toggle-navigation {
         padding: 10px;
