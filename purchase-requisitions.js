@@ -879,6 +879,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 padding: 12px 15px !important;
                 text-align: right !important;
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+                align-items: flex-start;
+                flex-wrap: wrap;
             }
             
             .data-table.card-view td:last-child {
@@ -890,6 +892,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 font-weight: bold;
                 margin-right: auto;
                 color: rgba(255, 255, 255, 0.7);
+                min-width: 120px;
+                max-width: 40%;
+                padding-right: 10px;
+                text-align: left;
+            }
+            
+            /* Fix for long text in Raised by and Pending with columns */
+            .data-table.card-view td[data-label="Raised by"],
+            .data-table.card-view td[data-label="Pending with"] {
+                word-break: break-word;
+            }
+            
+            .data-table.card-view td[data-label="Raised by"]::after,
+            .data-table.card-view td[data-label="Pending with"]::after {
+                content: '';
+                width: 100%;
+                display: block;
             }
         `;
         document.head.appendChild(style);
