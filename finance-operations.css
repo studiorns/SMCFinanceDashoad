@@ -520,10 +520,27 @@
 }
 
 .data-table th, .data-table td {
-    padding: 14px 18px;
-    text-align: left;
+    padding: 10px 12px; /* Reduce padding to create more space */
+    text-align: left; /* Align text to the left for better readability */
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: all var(--transition-speed) var(--transition-function);
+    word-wrap: break-word;
+    white-space: normal; /* Allow text to wrap */
+}
+
+/* Handle long text in table cells */
+.data-table td {
+    word-wrap: break-word;
+    white-space: nowrap; /* Prevent wrapping by default */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Add ellipsis for truncated text */
+}
+
+/* Allow wrapping for specific columns if needed */
+.data-table td[data-label="Raised by"],
+.data-table td[data-label="Pending with"] {
+    white-space: normal; /* Allow wrapping for these columns */
+    overflow: visible; /* Ensure text is fully visible when wrapping */
 }
 
 .data-table th {
@@ -534,6 +551,7 @@
     top: 0;
     z-index: 10;
     backdrop-filter: blur(5px);
+    text-align: left; /* Match alignment with table cells */
 }
 
 /* Alternating row colors for better readability */
