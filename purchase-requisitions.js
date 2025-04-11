@@ -425,15 +425,11 @@ document.addEventListener('DOMContentLoaded', function() {
                     cell.style.borderBottom = '1px solid rgba(255, 255, 255, 0.05)';
                     cell.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
                     
-                    // For "Raised by" and "Pending with" columns, truncate long text on mobile
+                    // For "Raised by" and "Pending with" columns, ensure they wrap properly on mobile
                     if ((headerText === 'Raised by' || headerText === 'Pending with') && isMobile) {
-                        cell.style.maxWidth = '150px';
-                        cell.style.whiteSpace = 'nowrap';
-                        cell.style.overflow = 'hidden';
-                        cell.style.textOverflow = 'ellipsis';
-                        
-                        // Add tooltip for truncated text
-                        cell.title = cell.textContent;
+                        // Don't apply truncation styles in mobile card view
+                        // Instead, we'll rely on the CSS to handle wrapping
+                        cell.title = cell.textContent; // Keep tooltip for accessibility
                     }
                 });
             });
@@ -881,6 +877,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 border-bottom: 1px solid rgba(255, 255, 255, 0.05);
                 align-items: flex-start;
                 flex-wrap: wrap;
+                word-break: normal; /* Default word break behavior */
+                white-space: normal; /* Allow text to wrap */
+                overflow: visible; /* Show all content */
+                color: white; /* Ensure text is white */
             }
             
             .data-table.card-view td:last-child {
@@ -898,10 +898,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 text-align: left;
             }
             
-            /* Fix for long text in Raised by and Pending with columns */
+            /* Enhanced fix for long text in Raised by and Pending with columns */
             .data-table.card-view td[data-label="Raised by"],
             .data-table.card-view td[data-label="Pending with"] {
                 word-break: break-word;
+                overflow-wrap: break-word;
+                hyphens: auto;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-end;
             }
             
             .data-table.card-view td[data-label="Raised by"]::after,
@@ -909,6 +914,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 content: '';
                 width: 100%;
                 display: block;
+                height: 4px; /* Add a little space after the content */
             }
         `;
         document.head.appendChild(style);
