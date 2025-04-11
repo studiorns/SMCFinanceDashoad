@@ -433,9 +433,11 @@
 .data-table td[data-label="Raised by"],
 .data-table td[data-label="Pending with"] {
     white-space: normal; /* Allow text to wrap */
+    overflow-wrap: break-word; /* Break long words if necessary */
+    word-break: break-word; /* Ensure long words break properly */
     overflow: visible; /* Ensure full visibility of text */
-    word-break: break-word; /* Break long words if necessary */
     text-align: left; /* Align text for better readability */
+    padding: 12px 15px; /* Add consistent padding for better spacing */
 }
 
 /* Ensure consistent padding and alignment */
