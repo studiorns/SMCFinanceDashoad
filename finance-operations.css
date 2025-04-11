@@ -435,6 +435,15 @@
     white-space: normal; /* Allow text to wrap */
     overflow: visible; /* Ensure full visibility of text */
     word-break: break-word; /* Break long words if necessary */
+    text-align: left; /* Align text for better readability */
+}
+
+/* Ensure consistent padding and alignment */
+.data-table td[data-label="Title"],
+.data-table td[data-label="Raised by"],
+.data-table td[data-label="Pending with"] {
+    padding: 10px 12px; /* Consistent padding */
+    text-align: left; /* Align text to the left */
 }
 
 /* Pagination Styles */
