@@ -321,7 +321,7 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-        padding: 10px 15px;
+        padding: 12px 15px; /* Increase padding for readability */
         text-align: left;
         border-bottom: none;
     }
@@ -332,7 +332,7 @@
         color: var(--text-secondary);
         margin-bottom: 5px;
         text-transform: uppercase;
-        font-size: 0.85rem;
+        font-size: 0.9rem; /* Slightly larger font for headings */
     }
 }
 
@@ -427,6 +427,14 @@
     opacity: 1;
     visibility: visible;
     bottom: -25px;
+}
+
+/* Ensure long text in specific columns wraps properly */
+.data-table td[data-label="Raised by"],
+.data-table td[data-label="Pending with"] {
+    white-space: normal; /* Allow text to wrap */
+    overflow: visible; /* Ensure full visibility of text */
+    word-break: break-word; /* Break long words if necessary */
 }
 
 /* Pagination Styles */
@@ -585,8 +593,9 @@
 /* Allow wrapping for specific columns if needed */
 .data-table td[data-label="Raised by"],
 .data-table td[data-label="Pending with"] {
-    white-space: normal; /* Allow wrapping for these columns */
-    overflow: visible; /* Ensure text is fully visible when wrapping */
+    white-space: normal; /* Allow text to wrap */
+    overflow: visible; /* Ensure full visibility of text */
+    word-break: break-word; /* Break long words if necessary */
 }
 
 .data-table th {
